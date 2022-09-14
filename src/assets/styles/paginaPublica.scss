@@ -7,9 +7,30 @@
     align-items: center;
     justify-content: center;
 
+    &.cadastro {
+        .logo {
+            display: none;
+        }
+    }
+
     .logo {
         margin-bottom: 40px;
         height: 40%;
+    }
+
+    .container-upload-imagem {
+        cursor: pointer;
+
+        &::after {
+            content: url('../imagens/camera.svg');
+            width: 48px;
+            height: 48px;
+            position: relative;
+            left: 80px;
+            top: -30px;
+            bottom: 0px;
+            margin: auto;
+        }
     }
 
     .error {
@@ -42,12 +63,12 @@
             text-align: center;
             margin-top: 24px;
 
-            p{
+            p {
                 color: $cinza3;
                 margin: 0px 0px 2px;
             }
 
-            a{
+            a {
                 color: $corPrimaria;
                 font-family: $fontBold;
                 text-decoration: underline;
@@ -59,7 +80,7 @@
     @media screen and (min-width: $desktopBreakpoint) {
         width: 100%;
         height: 100%;
-        padding: 10%;
+        padding: 80px;
         background-color: white;
         background-image: none;
 
@@ -74,6 +95,21 @@
             margin: 0px;
         }
 
+        &.cadastro {
+            .logo {
+                display: block;
+            }
+
+            .link{
+                display: flex;
+                flex-direction: row;
+
+                p{
+                    margin-right: 10px;
+                }
+            }
+        }
+
         .error {
             max-width: none;
         }
@@ -82,7 +118,7 @@
             max-width: none;
         }
 
-        form{
+        form {
             width: 40%;
             border-style: solid;
             border-color: $corPrimaria;
@@ -91,7 +127,7 @@
             padding: 80px 40px;
             margin-left: 10%;
 
-            button{
+            button {
                 height: 64px;
             }
 

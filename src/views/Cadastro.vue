@@ -3,7 +3,7 @@ import { defineComponent } from 'vue';
 import InputPublico from '../components/InputPublico.vue';
 import envelope from '../assets/imagens/envelope.svg';
 import chave from '../assets/imagens/chave.svg';
-import iconeUsuario from '../assets/imagens/usuarioCinza.svg';
+import iconeUsuario from '../assets/imagens/usuarioAtivo.svg';
 import avatar from '../assets/imagens/avatar.svg';
 
 export default defineComponent({
@@ -62,15 +62,15 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="container-publico">
+    <div :class="['container-publico', 'cadastro']">
         <img src="../assets/imagens/logo.svg" alt="Logo Devagram" class="logo" />
         <form>
-            <div>
+            <div class="container-upload-imagem">
                 <div>
-                    <img :src="avatar" alt="Foto do usuário" />
+                    <img :src="avatar" alt="Foto do usuário" class="avatar"/>
                 </div>
 
-                <input type="file" accept="imagem/*" />
+                <input type="file" accept="imagem/*" class="oculto"/>
             </div>
 
             <p v-if="erro" class="error">{{erro}}</p>
