@@ -6,6 +6,10 @@ import chave from '../assets/imagens/chave.svg';
 import iconeUsuario from '../assets/imagens/usuarioAtivo.svg';
 import avatar from '../assets/imagens/avatar.svg';
 import InputImagem from '../components/InputImagem.vue';
+import { CadastroServices } from '../services/CadastroServices';
+import router from '../router';
+
+const cadastroServices = new CadastroServices();
 
 export default defineComponent({
     setup() {
@@ -13,7 +17,8 @@ export default defineComponent({
             envelope,
             chave,
             iconeUsuario,
-            avatar
+            avatar,
+            cadastroServices
         }
     },
     data() {
@@ -30,12 +35,36 @@ export default defineComponent({
     methods: {
         async cadastrar() {
             try {
-                
-            } catch (e: any) {
+                this.erro = "";
+                if(!this.nome || !this.nome.trim() || 
+                !this.email || !this.email.trim() ||
+                !this.senha || !this.senha.trim() ||
+                !this.confirmacao || !this.confirmacao.trim()) {
+                    return this.erro = "Favor preencher todo o formulário";
+                }
+
+                if(this.senha !== this.confirmacao){
+                    return this.erro = "Senha e confirmação não são iguais";
+                }
+
+                this.loading = true;
+
+                const formDataRequisicao = new FormData();
+
+                formDataRequisicao.append('nome', this.nome);
+                formDataRequisicao.append('email', this.email);
+                formDataRequisicao.append('senha', this.senha);
+                if(this.imagem.arquivo){
+                    formDataRequisicao.append('file', this.imagem.arquivo);
+                }
+                await cadastroServices.cadastrar(formDataRequisicao);
+                router.push({name : 'login', query:{cadastroComSucesso: 'true'}});
+
+            } catch (e : any) {
                 console.log(e);
-                if (e?.response?.data?.erro) {
+                if(e?.response?.data?.erro){
                     this.erro = e?.response?.data?.erro;
-                } else {
+                }else{
                     this.erro = 'Não foi possível cadastrar o usuário, tente novamente!';
                 }
             }
@@ -83,8 +112,8 @@ export default defineComponent({
                 @setInput="setEmail" />
             <InputPublico :icone="chave" alt="Insira a senha" tipo="password" placeholder="Senha" :modelValue="senha"
                 @setInput="setSenha" />
-            <InputPublico :icone="chave" alt="Confirme a senha" tipo="password" placeholder="Confirmar Senha" :modelValue="senha"
-                @setInput="setSenha" />
+            <InputPublico :icone="chave" alt="Confirme a senha" tipo="password" placeholder="Confirmar Senha" :modelValue="confirmacao"
+                @setInput="setConfirmacao" />
             <button @click.enter.prevent="cadastrar"
                 :disabled="loading">{{buttonText}}
             </button>
