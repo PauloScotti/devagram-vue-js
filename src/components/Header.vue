@@ -1,19 +1,21 @@
 <script lang="ts">
     import { defineComponent } from 'vue';
+import Navegacao from './Navegacao.vue';
 
     export default defineComponent({
-        data(){
-            return {
-                resultado : [],
-                inputFocus: false
-            }
-        },
-        methods : {
-            setFocus(v : boolean){
-                this.inputFocus = v;
-            }
+    data() {
+        return {
+            resultado: [],
+            inputFocus: false
+        };
+    },
+    methods: {
+        setFocus(v: boolean) {
+            this.inputFocus = v;
         }
-    });
+    },
+    components: { Navegacao }
+});
 </script>
 
 
@@ -27,6 +29,7 @@
                     <input type="text" placeholder="Pesquisar" @focus="setFocus(true)" @blur="setFocus(false)" />
                 </div>
 
+                <Navegacao />
             </div>
         </div>
         <div class="resultado" v-if="resultado.length > 0">
