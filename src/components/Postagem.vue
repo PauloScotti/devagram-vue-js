@@ -49,10 +49,10 @@
 
         <div class="rodape">
             <div class="acoes">
-                <img :src="obterIconeCurtir" alt="Icone curtir">
-                <img src="../assets/imagens/comentarioCinza.svg" alt="Icone comentar">
+                <img :src="obterIconeCurtir" alt="Icone curtir" class="feedIcone">
+                <img src="../assets/imagens/comentarioCinza.svg" alt="Icone comentar" class="feedIcone">
                 <span class="curtidas">
-                    Curtido por <strong>{{post?.likes?.lenght}}</strong> pessoa{{post?.likes?.lenght > 1 ? 's' : ''}}
+                    Curtido por <strong>{{post?.likes?.length}}</strong> pessoa{{post?.likes?.length != 1 ? 's' : ''}}
                 </span>
             </div>
 
@@ -78,4 +78,4 @@
 </template>
 
 
-<!-- <style lang="scss" src="@/assets/styles/feed.scss" /> -->
+<style lang="scss" src="@/assets/styles/postagem.scss" />
