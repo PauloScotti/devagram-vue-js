@@ -4,19 +4,68 @@
 
     import imgCurtir from '../assets/imagens/curtir.svg';
     import imgCurtiu from '../assets/imagens/curtido.svg';
-    import imgComentario from '../assets/imagens/comentarioCinza.svg';
+    import imgComentarioCinza from '../assets/imagens/comentarioCinza.svg';
+    import imgComentarioAtivo from '../assets/imagens/comentarioAtivo.svg';
+    import { FeedServices } from '@/services/FeedServices';
+
+    const feedServices = new FeedServices();
 
     export default defineComponent({
     setup(){
         return {
-            loggedUserId : localStorage.getItem('_id')
+            loggedUserId : localStorage.getItem('_id'),
+            loggedAvatar : localStorage.getItem('avatar') ?? "",
+            loggedName : localStorage.getItem('nome') ?? "",
         }
     },
     props: {
         post: null
     },
+    data(){
+        return {
+            showComentario : false,
+            comentarioMsg : ''
+        }
+    },
     methods: {
         navegarParaPerfil() {
+        },
+        async toggleCurtir(){
+            try{
+                await feedServices.toggleCurtir(this.post._id);
+                const index = this.post?.likes?.findIndex((e:String) => e === this.loggedUserId);
+                if(index != -1){
+                    this.post?.likes?.splice(index, 1);
+                } else {
+                    this.post?.likes?.push(this.loggedUserId);
+                }
+            } catch(e){
+                console.log(e);
+            }
+        },
+        toggleComentario(){
+            this.showComentario = !this.showComentario;
+        },
+        async enviarComentario(){
+            try{
+                if(!this.comentarioMsg || !this.comentarioMsg.trim()){
+                    return;
+                }
+
+                await feedServices.enviarComentario(this.post?._id, this.comentarioMsg);
+
+                this.post?.comentarios?.push({
+                    usuarioId : this.loggedUserId,
+                    nome : this.loggedName,
+                    comentario : this.comentarioMsg
+                });
+
+                this.comentarioMsg = '';
+                this.showComentario = false;
+                
+            }catch(e){
+                console.log(e);
+            }
         }
     },
     components: { Avatar },
@@ -26,6 +75,9 @@
                 return imgCurtiu
             }
             return imgCurtir
+        },
+        obterIconeComentario(){
+            return this.showComentario ? imgComentarioAtivo : imgComentarioCinza;
         }
     }
     });
@@ -47,8 +99,8 @@
 
         <div class="rodape">
             <div class="acoes">
-                <img :src="obterIconeCurtir" alt="Icone curtir" class="feedIcone">
-                <img src="../assets/imagens/comentarioCinza.svg" alt="Icone comentar" class="feedIcone">
+                <img :src="obterIconeCurtir" alt="Icone curtir" class="feedIcone" @click="toggleCurtir" />
+                <img :src="obterIconeComentario" alt="Icone comentar" class="feedIcone" @click="toggleComentario" />
                 <span class="curtidas">
                     Curtido por <strong>{{post?.likes?.length}}</strong> pessoa{{post?.likes?.length != 1 ? 's' : ''}}
                 </span>
@@ -69,8 +121,12 @@
             </div>
         </div>
 
-        <div class="container-comentario">
-
+        <div class="container-comentario" v-if="showComentario">
+            <Avatar alt="Imagem do usuário logado" :imagem="loggedAvatar" />
+            <input type="text" v-model="comentarioMsg" placeholder="Adicione um comentário..." @keyup.enter="enviarComentario" />
+            <button type="button" @click="enviarComentario">
+                Publicar
+            </button>
         </div>
     </div>
 </template>

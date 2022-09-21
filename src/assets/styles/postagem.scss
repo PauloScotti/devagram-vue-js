@@ -103,6 +103,30 @@
         }
     }
 
+    .container-comentario{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 12px;
+        margin-bottom: 16px;
+        margin-top: 5px;
+
+        input{
+            resize: none;
+            flex: 1;
+            max-width: 100%;
+            border: none;
+            outline: none;
+            font-size: 12px;
+            color: $cinza2;
+        }
+
+        button{
+            display: none;
+        }
+    }
+
     @media screen and (min-width: $desktopBreakpoint) {
         .cabecalho{
             cursor: pointer;
@@ -121,7 +145,7 @@
             img{
                 width: 100%;
                 height: auto;
-                max-height: none;
+                max-width: none;
                 object-fit: cover;
             }
         }
@@ -156,6 +180,26 @@
                 strong{
                     font-size: 16px;
                 }
+            }
+        }
+
+        .container-comentario{
+            padding: 0 16px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+
+            inpu{
+                font-size: 16px;
+            }
+
+            button{
+                display: block;
+                background-color: transparent;
+                color: $corPrimaria;
+                outline: none;
+                border: none;
+                font-size: 16px;
+                cursor: pointer;
             }
         }
     }
