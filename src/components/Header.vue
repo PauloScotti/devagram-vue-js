@@ -15,7 +15,7 @@ import Navegacao from './Navegacao.vue';
         }
     },
     components: { Navegacao }
-});
+    });
 </script>
 
 

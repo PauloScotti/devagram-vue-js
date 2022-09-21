@@ -1,13 +1,13 @@
 <script lang="ts">
     import { defineComponent } from 'vue';
-import Postagem from './Postagem.vue';
+    import Postagem from './Postagem.vue';
 
     export default defineComponent({
     props: {
         posts: Array
     },
     components: { Postagem }
-});
+    });
 </script>
 
 

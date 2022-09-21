@@ -104,6 +104,59 @@
     }
 
     @media screen and (min-width: $desktopBreakpoint) {
-        
+        .cabecalho{
+            cursor: pointer;
+
+            strong {
+                font-size: 18px;
+            }
+        }
+
+        .avatar{
+            width: 42px;
+            height: 42px;
+        }
+
+        .foto{
+            img{
+                width: 100%;
+                height: auto;
+                max-height: none;
+                object-fit: cover;
+            }
+        }
+
+        .rodape{
+            .acoes{
+                .feedIcone{
+                    width: 32px;
+                    height: 32px;
+                }
+                .curtidas{
+                    font-size: 16px;
+                    strong{
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+
+        .descricao{
+            p{
+                font-size: 16px;
+                strong{
+                    font-size: 16px;
+                }
+            }
+        }
+
+        .comentarios{
+            p{
+                font-size: 16px;
+                strong{
+                    font-size: 16px;
+                }
+            }
+        }
     }
 }

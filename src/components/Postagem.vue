@@ -6,8 +6,6 @@
     import imgCurtiu from '../assets/imagens/curtido.svg';
     import imgComentario from '../assets/imagens/comentarioCinza.svg';
 
-    
-
     export default defineComponent({
     setup(){
         return {
@@ -30,7 +28,7 @@
             return imgCurtir
         }
     }
-});
+    });
 </script>
 
 
