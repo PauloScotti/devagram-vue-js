@@ -53,6 +53,12 @@
                 font-size: 12px;
                 margin: 0 0 2px;
                 color: $cinza4;
+
+                span{
+                    cursor: pointer;
+                    text-decoration: underline;
+                    color: $corPrimaria3;
+                }
             }
         }
 
@@ -168,6 +174,9 @@
         .descricao{
             p{
                 font-size: 16px;
+                span{
+                    font-size: 16px;
+                }
                 strong{
                     font-size: 16px;
                 }
