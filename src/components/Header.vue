@@ -7,6 +7,9 @@ import ResultadoBusca from './ResultadoBusca.vue';
     const usuarioServices = new UsuarioServices();
 
     export default defineComponent({
+        props: {
+            hide : Boolean
+        },
     data() {
         return {
             resultado: [] as any,
@@ -47,7 +50,7 @@ import ResultadoBusca from './ResultadoBusca.vue';
 
 
 <template>
-    <header class="container-header">
+    <header class="container-header" :class="{hide}">
         <div class="principal">
             <img src="../assets/imagens/logoHorizontal.svg" alt="Logo Devagram" />
             <div class="group">
