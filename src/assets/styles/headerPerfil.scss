@@ -59,7 +59,7 @@
                 background-color: white;
                 cursor: pointer;
 
-                .principal{
+                &.principal{
                     background-color: $corPrimaria;
                     color: white;
                 }
