@@ -93,7 +93,7 @@ export default defineComponent({
 <template>
     <Loading :active="loading" :can-cancel="false" color="#5E49FF" :is-full-page="true" />
     <Header :hide="true" />
-    <div class="container-editar" v-if="posts && posts.length > 0" >
+    <div class="container-editar" v-if="!loading">
         <HeaderAcoes :showLeft="true" :showRight="true" rightLabel="Conculir" 
             title="Editar Perfil" 
             @acoesCallback="concluirEdicao"
