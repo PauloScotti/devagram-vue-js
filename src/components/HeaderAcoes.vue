@@ -30,10 +30,10 @@
 <template>
     <div class="container-acoes">
         <img src="../assets/imagens/setaEsquerda.svg" alt="Voltar" v-if="showLeft && isLeftIcon" @click="goBack" />
-        <span v-else-if="showLeft && !isLeftIcon">Cancelar</span>
+        <span v-else-if="showLeft && !isLeftIcon" @click="goBack">Cancelar</span>
         <strong>{{title}}</strong>
         <img src="../assets/imagens/logout.svg" alt="Sair" v-if="showRight && isRightIcon" @click="logout" />
-        <span v-if="showRight && !isRightIcon"  class="principal">{{rightLabel}}</span>
+        <span v-if="showRight && !isRightIcon" class="principal" @click="$emit('acoesCallback')">{{rightLabel}}</span>
     </div>
         
 </template>
