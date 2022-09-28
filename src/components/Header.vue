@@ -3,6 +3,7 @@
     import Navegacao from './Navegacao.vue';
     import { UsuarioServices } from '@/services/UsuarioServices';
 import ResultadoBusca from './ResultadoBusca.vue';
+import router from '@/router';
 
     const usuarioServices = new UsuarioServices();
 
@@ -42,7 +43,10 @@ import ResultadoBusca from './ResultadoBusca.vue';
             } catch(e){
                 console.log(e)
             }
-        }
+        },
+        efetuarNavegacao(name: string) {
+            router.push({ name });
+        },
     },
     components: { Navegacao, ResultadoBusca }
     });
@@ -52,7 +56,7 @@ import ResultadoBusca from './ResultadoBusca.vue';
 <template>
     <header class="container-header" :class="{hide}">
         <div class="principal">
-            <img src="../assets/imagens/logoHorizontal.svg" alt="Logo Devagram" />
+            <img src="../assets/imagens/logoHorizontal.svg" alt="Logo Devagram" @click="efetuarNavegacao('home')" />
             <div class="group">
                 <div class="pesquisa" :class="{focus:inputFocus}">
                     <img src="../assets/imagens/lupa.svg" alt="Pesquisa" layout="fill" class="icon" />
