@@ -6,16 +6,18 @@ import { UsuarioServices } from '@/services/UsuarioServices';
 import HeaderAcoes from '../components/HeaderAcoes.vue';
 import Avatar from '../components/Avatar.vue';
 import router from '@/router';
+import Loading from 'vue3-loading-overlay';
 
 const usuarioServices = new UsuarioServices();
 
 export default defineComponent({
-    components: { Header, Footer, HeaderAcoes, Avatar },
+    components: { Header, Footer, HeaderAcoes, Avatar, Loading },
     data() {
         return {
             nome: localStorage.getItem('nome') as string,
             avatar: localStorage.getItem('avatar') as string,
-            imagem: {} as any
+            imagem: {} as any,
+            loading: false
         }
     },
     computed: {
@@ -51,6 +53,8 @@ export default defineComponent({
                     return;
                 }
 
+                this.loading = true;
+
                 const requisicaoBody = new FormData();
                 if(this.nome){
                     requisicaoBody.append('nome', this.nome);
@@ -67,6 +71,7 @@ export default defineComponent({
                     localStorage.setItem('avatar', this.imagem.preview);
                 }
 
+                this.loading = false;
                 return router.back();
 
             } catch (e: any) {
@@ -77,6 +82,8 @@ export default defineComponent({
                     console.log('Não foi possível efetuar a alteração, tente novamente!');
                 }
             }
+
+            this.loading = false;
         }
     }
 });
@@ -84,8 +91,9 @@ export default defineComponent({
 
 
 <template>
+    <Loading :active="loading" :can-cancel="false" color="#5E49FF" :is-full-page="true" />
     <Header :hide="true" />
-    <div class="container-editar">
+    <div class="container-editar" v-if="posts && posts.length > 0" >
         <HeaderAcoes :showLeft="true" :showRight="true" rightLabel="Conculir" 
             title="Editar Perfil" 
             @acoesCallback="concluirEdicao"
