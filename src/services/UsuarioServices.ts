@@ -16,6 +16,10 @@ export class UsuarioServices extends HttpApiServices{
         return await this.put('seguir?id=' + id);
     }
 
+    async sigoOuNao(id : String) {
+        return await this.get('seguir?id=' + id);
+    }
+
     async atualizar(body : any) {
         return await this.put('/usuario', body);
     }

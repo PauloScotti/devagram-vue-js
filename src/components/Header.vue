@@ -2,8 +2,8 @@
     import { defineComponent } from 'vue';
     import Navegacao from './Navegacao.vue';
     import { UsuarioServices } from '@/services/UsuarioServices';
-import ResultadoBusca from './ResultadoBusca.vue';
-import router from '@/router';
+    import ResultadoBusca from './ResultadoBusca.vue';
+    import router from '@/router';
 
     const usuarioServices = new UsuarioServices();
 

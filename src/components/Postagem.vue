@@ -7,7 +7,11 @@
     import imgComentarioCinza from '../assets/imagens/comentarioCinza.svg';
     import imgComentarioAtivo from '../assets/imagens/comentarioAtivo.svg';
     import { FeedServices } from '@/services/FeedServices';
-import router from '@/router';
+    import router from '@/router';
+    import { UsuarioServices } from '@/services/UsuarioServices';
+    import ResultadoLikes from './ResultadoLikes.vue';
+
+    const usuarioServices = new UsuarioServices();
 
     const feedServices = new FeedServices();
     const MAX_DESCRICAO = 90;
@@ -28,7 +32,9 @@ import router from '@/router';
         return {
             showComentario : false,
             comentarioMsg : '',
-            showDescricaoFull : false
+            showDescricaoFull : false,
+            pesquisa : '',
+            resultado: [] as any,
         }
     },
     methods: {
@@ -74,9 +80,21 @@ import router from '@/router';
         },
         toggleDescricaoFull(){
             this.showDescricaoFull = !this.showDescricaoFull;
+        },
+        async buscarUsuarios(e : any) {
+            try{
+                for(let i = 0; i < this.post?.likes?.length; i++){
+                    const resposta = await usuarioServices.buscarDadosPorId(this.post.likes[i]);
+                    if(resposta && resposta.data){
+                        this.resultado.push(resposta.data);
+                    }
+                }
+            } catch(e){
+                console.log(e)
+            }
         }
     },
-    components: { Avatar },
+    components: { Avatar, ResultadoLikes },
     computed: {
         obterIconeCurtir(){
             if(this.post?.likes && this.post?.likes.findIndex((e : String) => e === this.loggedUserId) != -1){
@@ -115,7 +133,7 @@ import router from '@/router';
             <div class="acoes">
                 <img :src="obterIconeCurtir" alt="Icone curtir" class="feedIcone" @click="toggleCurtir" />
                 <img :src="obterIconeComentario" alt="Icone comentar" class="feedIcone" @click="toggleComentario" />
-                <span class="curtidas">
+                <span class="curtidas" @click="buscarUsuarios">
                     Curtido por <strong>{{post?.likes?.length}}</strong> pessoa{{post?.likes?.length != 1 ? 's' : ''}}
                 </span>
             </div>
@@ -130,6 +148,14 @@ import router from '@/router';
                     </span>
                 </p>
             </div>
+            <div class="resultado" v-if="resultado.length > 0">
+            <ResultadoLikes v-for="user in resultado"
+                :key="user._id"
+                :id="user._id"
+                :nome="user.nome"
+                :avatar="user.avatar"
+            />
+        </div>
 
             <div class="comentarios">
                 <div v-for="(comentario, index) in post?.comentarios" :key="index">

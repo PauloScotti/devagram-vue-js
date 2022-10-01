@@ -1,0 +1,80 @@
+@import './variaveis.scss';
+
+.container-resultado-likes{
+    display: flex;
+    flex-direction: row;
+    padding: 10px 16px;
+    border-bottom: 0.5px solid $cinza1;
+
+    cursor: pointer;
+
+    &:hover{
+        background-color: $cinza;
+    }
+
+    .avatar{
+        width: 32px;
+        height: 32px;
+        margin-right: 8px;
+    }
+
+    .info{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+
+        > * {
+            display: block;
+            font-size: 12px;
+            color: $cinza4;
+        }
+        
+        button{
+            border-radius: 4px;
+            font-size: 12px;
+            height: 24px;
+            outline: none;
+            border: 1px solid $corPrimaria;
+            color: $corPrimaria;
+            background-color: white;
+            cursor: pointer;
+            margin-left: 5px;
+
+
+            &.principal{
+                background-color: $corPrimaria;
+                color: white;
+            }
+        }
+    }
+
+    @media screen and (min-width: $desktopBreakpoint) {
+        width: 32%;
+    
+            .infos{
+    
+                .dados{
+    
+                    .status{
+                        margin-bottom: 24px;
+    
+                        strong{
+                            font-size: 16px;
+                            line-height: 16px;
+                        }
+    
+                        span{
+                            font-size: 14px;
+                            line-height: 16px;
+                        }
+                    }
+                }
+    
+                button{
+                    font-size: 14px;
+                    height: 48px;
+                }
+            }
+    }
+}
