@@ -7,7 +7,7 @@
     import Feed from '../components/Feed.vue';
     import router from '@/router';
     import HeaderPerfil from '../components/HeaderPerfil.vue';
-    import Loading from 'vue3-loading-overlay';
+    import Loading from 'vue-loading-overlay';
     
     const feedServices = new FeedServices();
     const usuarioServices = new UsuarioServices();

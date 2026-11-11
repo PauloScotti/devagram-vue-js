@@ -26,8 +26,8 @@ export default defineComponent({
     methods: {
         async efetuarLogin() {
             try {
-                if (!this.login && !this.login.trim()
-                    && !this.senha && !this.senha.trim()) {
+                this.erro = "";
+                if (!this.login?.trim() || !this.senha?.trim()) {
                     this.erro = "Favor preencher o formulário";
                     return;
                 }

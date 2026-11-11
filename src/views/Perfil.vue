@@ -6,7 +6,7 @@ import { FeedServices } from '../services/FeedServices';
 import Feed from '../components/Feed.vue';
 import HeaderPerfil from '../components/HeaderPerfil.vue';
 import { UsuarioServices } from '@/services/UsuarioServices';
-import Loading from 'vue3-loading-overlay';
+import Loading from 'vue-loading-overlay';
 
 const usuarioServices = new UsuarioServices();
 

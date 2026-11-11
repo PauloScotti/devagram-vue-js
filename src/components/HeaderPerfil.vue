@@ -11,11 +11,6 @@ export default defineComponent({
             loggedId: localStorage.getItem('_id')
         }
     },
-    data() {
-        return {
-            seguindo: false
-        }
-    },
     props: {
         usuario: {} as any,
         title: String,
@@ -26,38 +21,35 @@ export default defineComponent({
     },
     components: { HeaderAcoes, Avatar },
     computed: {
-        obterTextoBotaoPrincipal() {
-            this.seguindo = this.usuario?.seguidores == this.loggedId;
-            if (this.usuario?._id === this.loggedId) {
+        ehMeuPerfil(): boolean {
+            return this.usuario?._id === this.loggedId;
+        },
+        // `seguidores` é a lista de ids de quem segue este usuário.
+        seguindo(): boolean {
+            return (this.usuario?.seguidores ?? []).some((id: unknown) => String(id) === this.loggedId);
+        },
+        obterTextoBotaoPrincipal(): string {
+            if (this.ehMeuPerfil) {
                 return "Editar Perfil";
-            } else if (!this.seguindo) {
-                return "Seguir";
             }
-            return "Deixar de seguir";
+            return this.seguindo ? "Deixar de seguir" : "Seguir";
         }
     },
     methods: {
         async acaoBotao() {
-            if (this.usuario?._id === this.loggedId) {
+            if (this.ehMeuPerfil) {
                 return router.push({ name: 'editar' });
             }
             try {
                 await usuarioServices.toggleFollow(this.usuario?._id);
 
-                const index = this.usuario?.seguidores?.findIndex((e: String) => e === this.loggedId);
-                if (index != -1) {
-                    this.usuario?.seguidores?.splice(index, 1);
+                const seguidores = this.usuario?.seguidores ?? [];
+                const index = seguidores.findIndex((id: unknown) => String(id) === this.loggedId);
+                if (index !== -1) {
+                    seguidores.splice(index, 1);
                 } else {
-                    this.usuario?.seguidores?.push(this.loggedId);
+                    seguidores.push(this.loggedId);
                 }
-
-                // this.seguindo = !this.seguindo;
-                // console.log(this.seguindo); 
-                // if(!this.seguindo){
-                //     this.usuario.seguidores++;
-                // }else{
-                //     this.usuario.seguidores--;
-                // }
             } catch (e) {
                 console.log(e)
             }
@@ -87,7 +79,7 @@ export default defineComponent({
                         <span>Seguindo</span>
                     </div>
                 </div>
-                <button :class="{principal: !seguindo ?? false}"
+                <button :class="{principal: !seguindo}"
                     @click="acaoBotao">{{obterTextoBotaoPrincipal}}</button>
             </div>
         </div>

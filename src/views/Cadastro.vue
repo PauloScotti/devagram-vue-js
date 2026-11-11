@@ -47,6 +47,11 @@ export default defineComponent({
                     return this.erro = "Senha e confirmação não são iguais";
                 }
 
+                // A API exige pelo menos 8 caracteres em senhas novas.
+                if(this.senha.length < 8){
+                    return this.erro = "A senha precisa ter pelo menos 8 caracteres";
+                }
+
                 this.loading = true;
 
                 const formDataRequisicao = new FormData();

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import type { AxiosInstance } from 'axios';
+import { encerrarSessao, sessaoExpirou } from './sessao';
 
 export class HttpApiServices {
     axios : AxiosInstance
@@ -17,6 +18,17 @@ export class HttpApiServices {
 
             return config;
         })
+
+        this.axios.interceptors.response.use(
+            (response) => response,
+            (erro) => {
+                if (sessaoExpirou(erro?.response?.status, localStorage.getItem('token'))) {
+                    encerrarSessao();
+                    window.location.href = '/';
+                }
+                return Promise.reject(erro);
+            }
+        );
     }
 
     post(url : string, data : any) {
