@@ -1,5 +1,6 @@
 import { useAccessTokenStore } from "./../stores/accessToken";
 import { HttpApiServices } from "./HttpApiServices"
+import { encerrarSessao } from "./sessao";
 
 export class LoginServices extends HttpApiServices{
     async login(body : any) {
@@ -25,11 +26,7 @@ export class LoginServices extends HttpApiServices{
 
     logout(){
         const store = useAccessTokenStore();
-        localStorage.removeItem('email');
-        localStorage.removeItem('token');
-        localStorage.removeItem('_id');
-        localStorage.removeItem('nome');
-        localStorage.removeItem('avatar');
+        encerrarSessao();
         store.setToken('');
     }
 }

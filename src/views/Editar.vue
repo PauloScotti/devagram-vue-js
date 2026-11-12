@@ -6,7 +6,7 @@ import { UsuarioServices } from '@/services/UsuarioServices';
 import HeaderAcoes from '../components/HeaderAcoes.vue';
 import Avatar from '../components/Avatar.vue';
 import router from '@/router';
-import Loading from 'vue3-loading-overlay';
+import Loading from 'vue-loading-overlay';
 
 const usuarioServices = new UsuarioServices();
 
